@@ -26,7 +26,7 @@ shinyUI(fluidPage(
           br(),
           br(),
           h3("The Predicted Next Word is:"),
-          div(textOutput("BestGuess"), style = "color:red"),
+          div(textOutput("BestPrediction"), style = "color:red"),
           br(),
           h3("This Application has predicted the next word on basis of following statistics/probability:"),
           tableOutput("view")

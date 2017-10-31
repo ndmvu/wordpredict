@@ -9,69 +9,69 @@ library(tm)
 shinyServer(function(input, output) {    
     # Summarizing the dataset
     output$Original <- renderText({
-        Original_Input <- input$obs
-        return(Original_Input)
+        Orig_Input <- input$obs
+        return(Orig_Input)
     })
     
     # Summarizing the dataset
     output$Translated <- renderText({
-        Original_Input <- input$obs
-        Translated_Input <- Translate_Input(Original_Input)
-        return(Translated_Input)
+        Orig_Input <- input$obs
+        Trans_Input <- Translate_Input(Orig_Input)
+        return(Trans_Input)
     })
     
     # Summarizing the dataset
-    output$BestGuess <- renderText({
-        Original_Input <- input$obs
-        Translated_Input <- Translate_Input(Original_Input)
-        BestGuess_Output <- "The predicted next word will be here."
-        Split_Trans_Input <- Split_Translate_Input(Original_Input)
+    output$BestPrediction <- renderText({
+        Orig_Input <- input$obs
+        Trans_Input <- Translate_Input(Orig_Input)
+        BestPrediction_Output <- "The predicted next word will be here."
+        Split_Trans_Input <- Split_Translate_Input(Orig_Input)
         Word_Count <- length(Split_Trans_Input)
         
         if(Word_Count==1){
-            BestGuess_Output <- Word_Count1(Split_Trans_Input)
+            BestPrediction_Output <- Word_Count1(Split_Trans_Input)
         }
         if(Word_Count==2){
-            BestGuess_Output <- Word_Count2(Split_Trans_Input)
+            BestPrediction_Output <- Word_Count2(Split_Trans_Input)
         }
         if(Word_Count==3){
-            BestGuess_Output <- Word_Count3(Split_Trans_Input)
+            BestPrediction_Output <- Word_Count3(Split_Trans_Input)
         }
         if(Word_Count > 3){
             Words_to_Search <- c(Split_Trans_Input[Word_Count - 2],
                                  Split_Trans_Input[Word_Count - 1],
                                  Split_Trans_Input[Word_Count])
-            BestGuess_Output <- Word_Count3(Words_to_Search)
+            BestPrediction_Output <- Word_Count3(Words_to_Search)
         }
-        return(BestGuess_Output)
+        return(BestPrediction_Output)
     })
     
     # Show the first "n" observations
     output$view <- renderTable({
-        Original_Input <- input$obs
-        Split_Trans_Input <- Split_Translate_Input(Original_Input)
+        Orig_Input <- input$obs
+        Split_Trans_Input <- Split_Translate_Input(Orig_Input)
         Word_Count <- length(Split_Trans_Input)
         
         if(Word_Count==1){
-            BestGuess_Output <- Word_Count1(Split_Trans_Input)
+            BestPrediction_Output <- Word_Count1(Split_Trans_Input)
         }
         if(Word_Count==2){
-            BestGuess_Output <- Word_Count2(Split_Trans_Input)
+            BestPrediction_Output <- Word_Count2(Split_Trans_Input)
         }
         if(Word_Count==3){
-            BestGuess_Output <- Word_Count3(Split_Trans_Input)
+            BestPrediction_Output <- Word_Count3(Split_Trans_Input)
         }
         if(Word_Count > 3){
             Words_to_Search <- c(Split_Trans_Input[Word_Count - 2],
                                  Split_Trans_Input[Word_Count - 1],
                                  Split_Trans_Input[Word_Count])
-            BestGuess_Output <- Word_Count3(Words_to_Search)
+            BestPrediction_Output <- Word_Count3(Words_to_Search)
         }
       
         if(exists("AlternativeGuess", where = -1)){
             AlternativeGuess
         }else{
-            XNgramsTable <- data.frame(Word=NA, Likelihood=NA)
+            XNgramsTable <- data.frame(Word=NA, Probability=NA)
         }
       
     })
